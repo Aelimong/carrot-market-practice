@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Home() {
+export default function Splash() {
   return (
     <div className="flex flex-col border border-x-1 bg-gray-100 border-x-gray-300 items-center max-w-96 justify-between min-h-screen p-6 m-auto">
       {/* 서비스 안내 */}

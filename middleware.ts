@@ -6,7 +6,7 @@ interface Routes {
 }
 
 const publicOnlyUrls: Routes = {
-  "/": true,
+  "/splash": true,
   "/login": true,
   "/create-account": true,
 };
@@ -17,11 +17,11 @@ export async function middleware(request: NextRequest) {
 
   if (!session.id) {
     if (!exists) {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/splash", request.url));
     }
   } else {
     if (exists) {
-      return NextResponse.redirect(new URL("/profile", request.url));
+      return NextResponse.redirect(new URL("/", request.url));
     }
   }
 }
