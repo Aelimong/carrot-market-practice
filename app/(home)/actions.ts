@@ -57,9 +57,7 @@ export async function createTweet(_: any, formData: FormData) {
         },
       });
 
-      // .refresh();
       redirect(`/tweets/${tweet.id}`);
-      // window.location.reload;
     }
   }
 }

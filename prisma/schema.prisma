@@ -22,26 +22,46 @@ model User {
   bio String?
   create_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  Tweet Tweet[]
-  Like Like[]
+  tweets Tweet[]
+  likes Like[]
+  responses Response[]
 }
 
 model Tweet {
   id Int @id @default(autoincrement())
   tweet String
+  views Int @default(0)
+
   create_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  user User @relation(fields: [userId], references: [id], onDelete: NoAction)
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int
-  Like Like[]
+  likes Like[]
+  responses Response[]
 }
 
 model Like {
-  id Int @id @default(autoincrement())
-  tweet String
+  @@id(name: "id", [userId, tweetId])
+
   create_at DateTime @default(now())
-  user User @relation(fields: [userId], references: [id], onDelete: NoAction)
-  tweetInfo Tweet @relation(fields: [tweetId], references: [id], onDelete: NoAction)
+  updated_at DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tweet Tweet @relation(fields: [tweetId], references: [id], onDelete: Cascade)
+  userId Int
+  tweetId Int
+}
+
+model Response {
+  id Int @id @default(autoincrement())
+  payload String
+
+  create_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tweet Tweet @relation(fields: [tweetId], references: [id], onDelete: Cascade)
   userId Int
   tweetId Int
 }
