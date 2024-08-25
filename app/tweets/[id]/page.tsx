@@ -5,6 +5,9 @@ import getSession from "@/lib/session";
 import { formatToTimeAgo } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import { unstable_cache as nextCache } from "next/cache";
+import Link from "next/link";
+import BackNav from "@/components/back-nav";
+import { useEffect, useOptimistic } from "react";
 
 async function getIsOwner(userId: number) {
   const session = await getSession();
@@ -53,7 +56,6 @@ const getCachedTweet = nextCache(getTweet, ["post-detail"], {
 });
 
 async function getLikeStatus(tweetId: number, userId: number) {
-  // const session = await getSession();
   try {
     const isLiked = await db.like.findUnique({
       where: {
@@ -114,28 +116,37 @@ export default async function TweetDetail({
   // const { likeCount, isLiked } = data;
 
   return (
-    <div className="flex flex-col justify-between border border-x-1 bg-gray-100 border-x-gray-300 max-w-96 min-h-screen p-6 m-auto">
-      <div className="w-full flex flex-col gap-6 *:text-black py-6 px-5 border-2 border-dashed rounded-md">
-        <span className="text-lg">{tweet.tweet}</span>
-        <div className="flex justify-between items-center">
-          <div className="text-sm text-neutral-500">
-            {formatToTimeAgo(tweet.create_at.toString())}
-          </div>
-          <div className="text-base font-semibold">{tweet.user.username}</div>
-        </div>
-        {/* <LikeButton isLiked={isLiked} likeCount={likeCount} tweetId={id} /> */}
+    <div className="flex flex-col border border-x-1 bg-gray-100 border-x-gray-300 max-w-96 min-h-screen p-6 m-auto">
+      <div className="mb-4">
+        <BackNav />
       </div>
-      <div>
-        <form className="flex flex-col gap-5">
-          <Input
-            name="comment"
-            required
-            placeholder="댓글을 작성해주세요."
-            type="text"
-            // errors={state?.fieldErrors.tweet}
-          />
-          <Button text="댓글 작성" />
-        </form>
+      <div className="flex flex-col justify-between gap-12">
+        <div className="w-full flex flex-col gap-6 *:text-black py-6 px-5 border-2 border-dashed rounded-md">
+          <span className="text-lg">{tweet.tweet}</span>
+          <div className="flex justify-between items-center">
+            <div className="text-sm text-neutral-500">
+              {formatToTimeAgo(tweet.create_at.toString())}
+            </div>
+            <Link href={`/users/${tweet.user.username}`}>
+              <div className="text-base font-semibold">
+                {tweet.user.username}
+              </div>
+            </Link>
+          </div>
+          {/* <LikeButton isLiked={isLiked} likeCount={likeCount} tweetId={id} /> */}
+        </div>
+        <div>
+          <form className="flex flex-col gap-5">
+            <Input
+              name="comment"
+              required
+              placeholder="댓글을 작성해주세요."
+              type="text"
+              // errors={state?.fieldErrors.tweet}
+            />
+            <Button text="댓글 작성" />
+          </form>
+        </div>
       </div>
     </div>
   );

@@ -12,4 +12,7 @@
   .primary-btn {
     @apply w-full rounded-md py-3 bg-[#533566] text-white  text-lg font-medium text-center hover:bg-[#765889] transition-colors;
   }
+  .small-btn {
+    @apply w-full rounded-md px-2 py-1 bg-[#533566] text-white  text-base font-medium text-center hover:bg-[#765889] transition-colors;
+  }
 }

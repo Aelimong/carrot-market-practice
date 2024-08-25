@@ -1,6 +1,8 @@
 import db from "@/lib/db";
 import getSession from "@/lib/session";
+import { HomeIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
 async function getUser() {
@@ -31,8 +33,11 @@ export default async function Profile() {
   };
 
   return (
-    <div className="flex flex-col border border-x-1 bg-gray-100 border-x-gray-300 items-center max-w-96 justify-between min-h-screen p-6 m-auto">
-      <div className="font-bold text-xl">My Profile</div>
+    <div className="flex flex-col border border-x-1 bg-gray-100 border-x-gray-300 max-w-96 justify-between min-h-screen p-6 m-auto">
+      <Link href="/">
+        <HomeIcon className="size-6 cursor-pointer" />
+      </Link>
+      <div className="font-bold text-xl text-center">My Profile</div>
       <div className="flex flex-col justify-start items-center gap-6">
         <div>
           <Image

@@ -17,12 +17,31 @@ export async function getMoreTweets(page: number) {
     },
     // 실제로 사용할 page size 적용해주기!
     skip: page * 1,
-    take: 1,
+    take: 5,
     orderBy: {
       create_at: "desc",
     },
   });
   return products;
+}
+
+export async function getTweetsByUserId(userId: number) {
+  const tweetsByUserId = await db.tweet.findMany({
+    select: {
+      id: true,
+      tweet: true,
+      create_at: true,
+      userId: true,
+      user: true,
+    },
+    where: {
+      userId,
+    },
+    orderBy: {
+      create_at: "desc",
+    },
+  });
+  return tweetsByUserId;
 }
 
 const tweetSchema = z.object({
